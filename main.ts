@@ -23,15 +23,6 @@ function movePlatforms () {
         value.vx = platformSpeed * -1
     }
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(jumping) && onPlatform) {
-        animatePlayer(false)
-        hero.setImage(heroImages[1])
-        jumping = true
-        hero.vy = -150
-        hero.ay = gravity
-    }
-})
 function setPlayer () {
     gravity = 300
     jumping = false
@@ -127,6 +118,15 @@ function setPlayer () {
     setPlayerOnPlatform()
     animatePlayer(true)
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!(jumping) && onPlatform) {
+        animatePlayer(false)
+        hero.setImage(heroImages[1])
+        jumping = true
+        hero.vy = -150
+        hero.ay = gravity
+    }
+})
 function setVariables () {
     platformWidth = 16
     platformHeight = 12
@@ -162,7 +162,6 @@ function spawnPlatforms () {
     platformSprite = platformSprites[platformSprites.length - 1]
     if (platformSprite.right < scene.screenWidth() - gapWidth * platformWidth) {
         platformTotalToSpawn = randint(platformMinimumRequired, platformMaximumRequired)
-        platformLevelCurrent = randint(0, Math.constrain(platformImages.length - 1, 0, platformLevelCurrent + 2))
         drawPlatform(platformTotalToSpawn, true, platformImages[platformLevelCurrent])
         movePlatforms()
         setNextGap()
@@ -231,9 +230,9 @@ let gapMinimum = 0
 let platformMinimumRequired = 0
 let platformHeight = 0
 let platformWidth = 0
-let gravity = 0
 let onPlatform = false
 let jumping = false
+let gravity = 0
 let platformSpeed = 0
 let platformSprites: Sprite[] = []
 let heroImages: Image[] = []
